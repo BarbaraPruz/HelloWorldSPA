@@ -1,0 +1,15 @@
+
+body {
+  padding-top: 150px;
+}
+
+.bg-black {
+  background-color: black;
+}
+.navbar-brand {
+  height: 80px;
+}
+.footer {
+  margin-top: 20px;
+  text-align: center;
+}
