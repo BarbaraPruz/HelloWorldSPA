@@ -15,32 +15,40 @@
     .ocean-info p {
         text-align: left;
     }
-    .panel-group {
-        text-align: center;
+    .panel {
+        width: 80%;
+        margin: auto;
     }
     .panel-heading .btn-primary {
-        width: 80%;
-        text-align: center;
+        width: 100%;
+         text-align: center;
     }
     </style>
      <script>
     function toggleIcons(hash) {
-        $('a[href^="'+hash+'"]').find('span').toggleClass('fa-angle-down');
-        $('a[href^="'+hash+'"]').find('span').toggleClass('fa-angle-up');    
+        //TO DO: probably just need to toggle the down (this code just used for initial load)
+        $('button[data-target^="'+hash+'"]').find('span').toggleClass('fa-angle-down');
+        $('button[data-target^="'+hash+'"]').find('span').toggleClass('fa-angle-up');  
     }
     $(document).ready(function() {
         console.log("Oceans Ready!");    
-        $('.btnCollapse').on('click', function(ev) {
+        $('.btn-primary').on('click', function(ev) {
+            let button = this; 
+            console.log('click on '+button.name);
+            let hashSplit = window.location.hash.split('/');
+            hashSplit[hashSplit.length-1]=button.name;
+            let newHash = hashSplit.join('/');
+            history.replaceState( {} , button.name, newHash );
             $(this).find('span').toggleClass('fa-angle-down');
-            $(this).find('span').toggleClass('fa-angle-up');     
-        });     
+            $(this).find('span').toggleClass('fa-angle-up');  
+        });   
+
         let hash = window.location.hash; 
         let categoryId = '#' + hash.substr(hash.lastIndexOf('/')+1);
-        console.log("oceans hash "+ hash + '  categoryId='+categoryId); 
         $(categoryId).collapse('show');
         toggleIcons(categoryId);
     }); 
-          
+
     </script>   
  
         <div class="aboutSection">
@@ -56,75 +64,92 @@
             </div>
         </div>
 
-        <div class="panel-group" id="accordion">
-            <div class="clearfix panel panel-default">
-                <div class="panel-heading">
-                    <h5 class="panel-title">
-                    <a class="btn btn-primary btnCollapse" data-toggle="collapse" data-parent="#accordion" href="#atlantic">Atlantic Ocean<span class="fa fa-angle-down"></span></a>
-                    </h5>
+        <div id="accordion">
+
+            <div class="panel">
+              <div class="panel-heading" id="headingAtlantic">
+                <h5>
+                  <button class="btn btn-primary collapsed" name="atlantic" data-toggle="collapse" data-target="#atlantic" aria-expanded="false" aria-controls="atlantic">
+                   Atlantic<span class="fa fa-angle-down"></span>
+                  </button>
+                </h5>
+              </div>          
+              <div id="atlantic" class="collapse" aria-labelledby="headingAtlantic" data-parent="#accordion">
+                <div class="panel-body ocean-info">
+                    <img src="images/atlantic.gif">
+                    <p>Et sed consul repudiare, vel ut lorem temporibus concludaturque. Veri solum eum ei, laoreet reprimique sadipscing vix ne, usu malis molestie moderatius te. Ubique saperet imperdiet ad mel. Erat bonorum invenire pro ex, sea ex option meliore, has no nostro maiorum voluptua. Ea graeci singulis est, inani euripidis quo at, aeterno feugait vix et.</p>
+                    <p>Mei ad error persius mentitum, in pri dicta gloriatur inciderint, cum veri delectus adipisci in. Ad vis appareat sapientem, in luptatum splendide efficiantur pro, no mei hinc similique. Ad quo alia prodesset, in clita inimicus dissentiet nam. Paulo dicam accommodare id quo, purto ludus qualisque cu has. Ius ea molestiae voluptaria, nobis evertitur nam et.</p>
                 </div>
-                <div id="atlantic" class="panel-collapse collapse">
-                    <div class="panel-body ocean-info">
-                        <img src="images/atlantic.gif">
-                        <p>Et sed consul repudiare, vel ut lorem temporibus concludaturque. Veri solum eum ei, laoreet reprimique sadipscing vix ne, usu malis molestie moderatius te. Ubique saperet imperdiet ad mel. Erat bonorum invenire pro ex, sea ex option meliore, has no nostro maiorum voluptua. Ea graeci singulis est, inani euripidis quo at, aeterno feugait vix et.</p>
-                        <p>Mei ad error persius mentitum, in pri dicta gloriatur inciderint, cum veri delectus adipisci in. Ad vis appareat sapientem, in luptatum splendide efficiantur pro, no mei hinc similique. Ad quo alia prodesset, in clita inimicus dissentiet nam. Paulo dicam accommodare id quo, purto ludus qualisque cu has. Ius ea molestiae voluptaria, nobis evertitur nam et.</p>
-                    </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-heading" id="headingArctic">
+                <h5>
+                  <button class="btn btn-primary collapsed" name="arctic" data-toggle="collapse" data-target="#arctic" aria-expanded="false" aria-controls="arctic">
+                    Arctic<span class="fa fa-angle-down"></span>
+                  </button>
+                </h5>
+              </div>
+              <div id="arctic" class="collapse" aria-labelledby="headingArctic" data-parent="#accordion">
+                <div class="panel-body ocean-info">
+                    <img class="img-fluid" src="images/arctic.jpg">         
+                    <p>Et sed consul repudiare, vel ut lorem temporibus concludaturque. Veri solum eum ei, laoreet reprimique sadipscing vix ne, usu malis molestie moderatius te. Ubique saperet imperdiet ad mel. Erat bonorum invenire pro ex, sea ex option meliore, has no nostro maiorum voluptua. Ea graeci singulis est, inani euripidis quo at, aeterno feugait vix et.</p>
+                    <p>Mei ad error persius mentitum, in pri dicta gloriatur inciderint, cum veri delectus adipisci in. Ad vis appareat sapientem, in luptatum splendide efficiantur pro, no mei hinc similique. Ad quo alia prodesset, in clita inimicus dissentiet nam. Paulo dicam accommodare id quo, purto ludus qualisque cu has. Ius ea molestiae voluptaria, nobis evertitur nam et.</p>   
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-heading" id="headingIndian">
+                <h5>
+                  <button class="btn btn-primary collapsed" name="indian" data-toggle="collapse" data-target="#indian" aria-expanded="false" aria-controls="indian">
+                    Indian<span class="fa fa-angle-down"></span>
+                  </button>
+                </h5>
+              </div>
+              <div id="indian" class="collapse" aria-labelledby="headingIndian" data-parent="#accordion">
+                <div class="panel-body ocean-info">
+                    <img class="img-fluid" src="images/indianocean.jpg">
+                    <p>Et sed consul repudiare, vel ut lorem temporibus concludaturque. Veri solum eum ei, laoreet reprimique sadipscing vix ne, usu malis molestie moderatius te. Ubique saperet imperdiet ad mel. Erat bonorum invenire pro ex, sea ex option meliore, has no nostro maiorum voluptua. Ea graeci singulis est, inani euripidis quo at, aeterno feugait vix et.</p>
+                    <p>Mei ad error persius mentitum, in pri dicta gloriatur inciderint, cum veri delectus adipisci in. Ad vis appareat sapientem, in luptatum splendide efficiantur pro, no mei hinc similique. Ad quo alia prodesset, in clita inimicus dissentiet nam. Paulo dicam accommodare id quo, purto ludus qualisque cu has. Ius ea molestiae voluptaria, nobis evertitur nam et.</p>                
+                </div>
+              </div>
+            </div>
+
+          <div class="panel">
+            <div class="panel-heading" id="headingPacific">
+                <h5>
+                    <button class="btn btn-primary collapsed" name="pacific" data-toggle="collapse" data-target="#pacific" aria-expanded="false" aria-controls="pacific">
+                      Pacific<span class="fa fa-angle-down"></span>
+                    </button>
+                </h5>
+            </div>
+            <div id="pacific" class="collapse" aria-labelledby="headingPacific" data-parent="#accordion">
+                <div class="panel-body ocean-info">
+                    <img class="img-fluid" src="images/pacific.jpg">                  
+                    <p>Et sed consul repudiare, vel ut lorem temporibus concludaturque. Veri solum eum ei, laoreet reprimique sadipscing vix ne, usu malis molestie moderatius te. Ubique saperet imperdiet ad mel. Erat bonorum invenire pro ex, sea ex option meliore, has no nostro maiorum voluptua. Ea graeci singulis est, inani euripidis quo at, aeterno feugait vix et.</p>
                 </div>
             </div>
-            <div class="clearfix panel panel-default">
-                <div class="panel-heading">
-                    <h5 class="panel-title">
-                    <a class="btn btn-primary btnCollapse"  data-toggle="collapse" data-parent="#accordion" href="#arctic">Arctic Ocean<span class="fa fa-angle-down"></span></a>
-                    </h5>
-                </div>
-                <div id="arctic" class="panel-collapse collapse">
-                     <div class="panel-body ocean-info">                    
-                        <img class="img-fluid" src="images/arctic.jpg">         
-                        <p>Et sed consul repudiare, vel ut lorem temporibus concludaturque. Veri solum eum ei, laoreet reprimique sadipscing vix ne, usu malis molestie moderatius te. Ubique saperet imperdiet ad mel. Erat bonorum invenire pro ex, sea ex option meliore, has no nostro maiorum voluptua. Ea graeci singulis est, inani euripidis quo at, aeterno feugait vix et.</p>
-                        <p>Mei ad error persius mentitum, in pri dicta gloriatur inciderint, cum veri delectus adipisci in. Ad vis appareat sapientem, in luptatum splendide efficiantur pro, no mei hinc similique. Ad quo alia prodesset, in clita inimicus dissentiet nam. Paulo dicam accommodare id quo, purto ludus qualisque cu has. Ius ea molestiae voluptaria, nobis evertitur nam et.</p>   
-                    </div>
+        </div>
+    
+        <div class="panel">
+            <div class="panel-heading" id="headingSouthern">
+                <h5>
+                <button class="btn btn-primary collapsed" name="southern" data-toggle="collapse" data-target="#southern" aria-expanded="false" aria-controls="southern">
+                    Southern<span class="fa fa-angle-down"></span>
+                </button>
+                </h5>
+            </div>
+            <div id="southern" class="collapse" aria-labelledby="headingSouthern" data-parent="#accordion">
+                <div class="panel-body ocean-info">
+                    <img class="img-fluid" src="images/southernOcean.jpg">   
+                    <p>Et sed consul repudiare, vel ut lorem temporibus concludaturque. Veri solum eum ei, laoreet reprimique sadipscing vix ne, usu malis molestie moderatius te. Ubique saperet imperdiet ad mel. Erat bonorum invenire pro ex, sea ex option meliore, has no nostro maiorum voluptua. Ea graeci singulis est, inani euripidis quo at, aeterno feugait vix et.</p>
+                    <p>p>Mei ad error persius mentitum, in pri dicta gloriatur inciderint, cum veri delectus adipisci in. Ad vis appareat sapientem, in luptatum splendide efficiantur pro, no mei hinc similique. Ad quo alia prodesset, in clita inimicus dissentiet nam. Paulo dicam accommodare id quo, purto ludus qualisque cu has. Ius ea molestiae voluptaria, nobis evertitur nam et.</p>                                                                          
                 </div>
             </div>
-            <div class="clearfix panel panel-default">
-                <div class="panel-heading">
-                    <h5 class="panel-title">
-                      <a class="btn btn-primary btnCollapse" data-toggle="collapse" data-parent="#accordion" href="#indian">Indian Ocean<span class="fa fa-angle-down"></span></a>
-                    </h5>
-                </div>
-                <div id="indian" class="panel-collapse collapse">
-                    <div class="panel-body ocean-info">
-                        <img class="img-fluid" src="images/indianocean.jpg">
-                        <p>Et sed consul repudiare, vel ut lorem temporibus concludaturque. Veri solum eum ei, laoreet reprimique sadipscing vix ne, usu malis molestie moderatius te. Ubique saperet imperdiet ad mel. Erat bonorum invenire pro ex, sea ex option meliore, has no nostro maiorum voluptua. Ea graeci singulis est, inani euripidis quo at, aeterno feugait vix et.</p>
-                        <p>Mei ad error persius mentitum, in pri dicta gloriatur inciderint, cum veri delectus adipisci in. Ad vis appareat sapientem, in luptatum splendide efficiantur pro, no mei hinc similique. Ad quo alia prodesset, in clita inimicus dissentiet nam. Paulo dicam accommodare id quo, purto ludus qualisque cu has. Ius ea molestiae voluptaria, nobis evertitur nam et.</p>                
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix panel panel-default">
-                <div class="panel-heading">
-                    <h5 class="panel-title">
-                    <a class="btn btn-primary btnCollapse"  data-toggle="collapse" data-parent="#accordion" href="#pacific">Pacific Ocean<span class="fa fa-angle-down"></span></a>
-                    </h5>
-                </div>
-                <div id="pacific" class="panel-collapse collapse">
-                    <div class="panel-body ocean-info">
-                        <img class="img-fluid" src="images/pacific.jpg">                  
-                        <p>Et sed consul repudiare, vel ut lorem temporibus concludaturque. Veri solum eum ei, laoreet reprimique sadipscing vix ne, usu malis molestie moderatius te. Ubique saperet imperdiet ad mel. Erat bonorum invenire pro ex, sea ex option meliore, has no nostro maiorum voluptua. Ea graeci singulis est, inani euripidis quo at, aeterno feugait vix et.</p>
-                    </div>
-                </div>
-            </div> 
-            <div class="clearfix panel panel-default">
-               <div class="panel-heading">
-                    <h5 class="panel-title">
-                    <a  class="btn btn-primary btnCollapse" data-toggle="collapse" data-parent="#accordion" href="#southern">Southern Ocean<span class="fa fa-angle-down"></span></a>
-                    </h5>
-                </div>
-                <div id="southern" class="panel-collapse collapse">
-                    <div class="panel-body ocean-info">
-                        <img class="img-fluid" src="images/southernOcean.jpg">   
-                        <p>Et sed consul repudiare, vel ut lorem temporibus concludaturque. Veri solum eum ei, laoreet reprimique sadipscing vix ne, usu malis molestie moderatius te. Ubique saperet imperdiet ad mel. Erat bonorum invenire pro ex, sea ex option meliore, has no nostro maiorum voluptua. Ea graeci singulis est, inani euripidis quo at, aeterno feugait vix et.</p>
-                        <p>p>Mei ad error persius mentitum, in pri dicta gloriatur inciderint, cum veri delectus adipisci in. Ad vis appareat sapientem, in luptatum splendide efficiantur pro, no mei hinc similique. Ad quo alia prodesset, in clita inimicus dissentiet nam. Paulo dicam accommodare id quo, purto ludus qualisque cu has. Ius ea molestiae voluptaria, nobis evertitur nam et.</p>                                                                          
-                    </div>                   
-                </div>
-            </div>                           
-        </div>                            
-  
+        </div>
+        
+    </div>
+                      
+    
