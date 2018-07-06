@@ -25,35 +25,54 @@
     }
     </style>
      <script>
-    function toggleIcons(hash) {
-        //TO DO: probably just need to toggle the down (this code just used for initial load)
+    function toggleIconsByHash(hash) { // used for ocean accordian
+        hash = '#' + hash;
         $('button[data-target^="'+hash+'"]').find('span').toggleClass('fa-angle-down');
-        $('button[data-target^="'+hash+'"]').find('span').toggleClass('fa-angle-up');  
+        $('button[data-target^="'+hash+'"]').find('span').toggleClass('fa-angle-up');
     }
-    $(document).ready(function() {
-        console.log("Oceans Ready!");    
-        $('.btn-primary').on('click', function(ev) {
-            let button = this; 
-            console.log('click on '+button.name);
-            let hashSplit = window.location.hash.split('/');
-            hashSplit[hashSplit.length-1]=button.name;
-            let newHash = hashSplit.join('/');
-            history.replaceState( {} , button.name, newHash );
-            $(this).find('span').toggleClass('fa-angle-down');
-            $(this).find('span').toggleClass('fa-angle-up');  
-        });   
+    function toggleIconsForButton(button) {  // used for about oceans section
+        $(button).find('span').toggleClass('fa-angle-down');
+        $(button).find('span').toggleClass('fa-angle-up');  
+    }
 
+    $(document).ready(function() { 
+        $('.btn-primary').on('click', function(ev) {  // oceans accordian       
+            let buttonName = this.name; 
+            let hashSplit = window.location.hash.split('/');
+            let last = hashSplit[hashSplit.length-1];
+            // update icon for ocean being selected
+            toggleIconsByHash(buttonName);
+            if (last != buttonName) {
+                // new ocean selected so update browser history and toggle icons for last 
+                hashSplit[hashSplit.length-1]=buttonName;
+                // if previous ocean, toggle those icons
+                if (last) toggleIconsByHash(last);
+            }
+            else {
+                // no ocean selected so plan to reflect in browser history
+                hashSplit.pop();
+            }
+            // update browser history
+            let newHash = hashSplit.join('/');
+            history.pushState( {} , "oceans", newHash );
+        });
+
+        $('.btn-info').on('click', function(ev) { // for about oceans button
+            toggleIconsForButton(this);
+        }); 
+
+        //initial page loading  
         let hash = window.location.hash; 
         let categoryId = '#' + hash.substr(hash.lastIndexOf('/')+1);
         $(categoryId).collapse('show');
-        toggleIcons(categoryId);
+        toggleIconsByHash(categoryId.substr(1));        
     }); 
 
     </script>   
  
         <div class="aboutSection">
             <button class="btn btn-info btnCollapse" type="button" data-toggle="collapse" data-target="#aboutOceans" aria-expanded="false" aria-controls="aboutOceans">
-                About Oceans<span id="iconCollapse" class="fa fa-angle-down"></span>
+                #About Oceans<span id="iconCollapse" class="fa fa-angle-down"></span>
               </button>          
             <div id="aboutOceans" class="collapse">
                 <p>All about Oceans in general here!</p>
